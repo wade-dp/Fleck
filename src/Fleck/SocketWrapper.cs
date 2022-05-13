@@ -188,5 +188,10 @@ namespace Fleck
                 return null;
             }
         }
+
+        public void Send(byte[] buffer, int offset, int count)
+        {
+            _stream.Write(buffer, offset, count);
+        }
     }
 }

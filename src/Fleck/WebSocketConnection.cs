@@ -67,6 +67,21 @@ namespace Fleck
         return Send(message, Handler.FrameBinary);
     }
 
+    public void SyncSend(byte[] message)
+    {
+	    SyncSend(message, Handler.FrameBinary);
+    }
+
+    public void SyncSend(string message)
+    {
+        SyncSend(message, Handler.FrameText);
+    }
+
+    public Stream GetStream()
+    {
+	    return Socket.Stream;
+    }
+
     public Task SendPing(byte[] message)
     {
         return Send(message, Handler.FramePing);
@@ -94,6 +109,24 @@ namespace Fleck
 
       var bytes = createFrame(message);
       return SendBytes(bytes);
+    }
+
+    private void SyncSend<T>(T message, Func<T, byte[]> createFrame)
+    {
+	    if (Handler == null)
+		    throw new InvalidOperationException("Cannot send before handshake");
+
+	    if (!IsAvailable)
+	    {
+		    const string errorMessage = "Data sent while closing or after close. Ignoring.";
+		    FleckLog.Warn(errorMessage);
+
+		    var taskForException = new TaskCompletionSource<object>();
+		    taskForException.SetException(new ConnectionNotAvailableException(errorMessage));
+	    }
+
+	    var bytes = createFrame(message);
+	    SendBytes(bytes, 0, bytes.Length);
     }
 
     public void StartReceiving()
@@ -198,6 +231,11 @@ namespace Fleck
         FleckLog.Error("Application Error", e);
         Close(WebSocketStatusCodes.InternalServerError);
       }
+    }
+
+    private void SendBytes(byte[] bytes, int offset, int count)
+    {
+	    Socket.Send(bytes, offset, count);
     }
 
     private Task SendBytes(byte[] bytes, Action callback = null)
