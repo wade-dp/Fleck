@@ -21,7 +21,7 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
     command: pack
-    packagesToPack: '**/*.csproj'
+    packagesToPack: 'Fleck/*.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: VSBuild@1
