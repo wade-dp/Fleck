@@ -20,9 +20,6 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-    command: pack
-    packagesToPack: 'Fleck/*.csproj'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: VSBuild@1
   inputs:
@@ -34,3 +31,9 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: NuGetCommand@2
+  inputs:
+    command: pack
+    packagesToPack: 'Fleck/*.csproj'
+    packDestination: '$(Build.ArtifactStagingDirectory)'
