@@ -110,7 +110,7 @@ namespace Fleck.Tests
         {
             var q = new QueuedStream(new MemoryStream());
 
-            Assert.Throws<NotSupportedException>(() => q.Write(new byte[] { 1, 2, 3 }, 0, 3));
+            Assert.DoesNotThrow(() => q.Write(new byte[] { 1, 2, 3 }, 0, 3));
         }
 
         [Test]
