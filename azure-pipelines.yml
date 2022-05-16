@@ -29,7 +29,7 @@ steps:
 
 - task: CopyFiles@2  
   inputs:
-    SourceFolder: '**\*.nupkg'
+    SourceFolder: 'src\Fleck\**\*.nupkg'
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1  
