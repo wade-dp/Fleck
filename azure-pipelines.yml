@@ -21,6 +21,16 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: VersionDotNetCoreAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    Injectversion: False
+    VersionRegex: '\d+\.\d+\.\d+\.\d+'
+    FilenamePattern: '.csproj'
+    AddDefault: false
+    OutputVersion: 'OutputedVersion'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
@@ -43,20 +53,3 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: DotNetCoreCLI@2
-  name: fleck
-  inputs:
-    command: pack
-    packagesToPack: src/Fleck/Fleck.csproj
-    versioningScheme: byBuildNumber
-    packDirectory: '$(Build.ArtifactStagingDirectory)'
-    majorVersion: '1'
-    minorVersion: '0'
-
-- task: DotNetCoreCLI@2
-  inputs:
-   command: push
-   packagesToPush: 'fleck'
-   packDirectory: '$(Build.ArtifactStagingDirectory)'
-
