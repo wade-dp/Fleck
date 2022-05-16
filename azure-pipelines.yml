@@ -16,15 +16,15 @@ variables:
   major: '1'
   minor: '0'
   patch: '0'
+  name: $(major).$(minor).$(patch).$(Rev:.r)
 
 steps:
 - task: NuGetToolInstaller@1
+- script: echo '$(Build.BuildNumber)'
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
-Build.BuildNumber: $(major).$(minor).$(patch).$(Rev:.r)
 
 - task: VersionDotNetCoreAssemblies@2
   inputs:
