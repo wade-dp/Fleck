@@ -54,3 +54,19 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  name: fleck
+  inputs:
+    command: pack
+    packagesToPack: src/Fleck/Fleck.csproj
+    versioningScheme: byBuildNumber
+    packDirectory: '$(Build.ArtifactStagingDirectory)'
+    majorVersion: '1'
+    minorVersion: '0'
+
+- task: DotNetCoreCLI@2
+  inputs:
+   command: push
+   packagesToPush: 'fleck'
+   packDirectory: '$(Build.ArtifactStagingDirectory)'
+
