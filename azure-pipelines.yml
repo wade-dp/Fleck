@@ -21,16 +21,6 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VersionDotNetCoreAssemblies@2
-  inputs:
-    Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
-    Injectversion: False
-    VersionRegex: '\d+\.\d+\.\d+\.\d+'
-    FilenamePattern: '.csproj'
-    AddDefault: false
-    OutputVersion: 'OutputedVersion'
-    
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
