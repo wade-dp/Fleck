@@ -16,11 +16,12 @@ variables:
   major: '1'
   minor: '0'
   patch: '0'
-  buildNo: $(major).$(minor).$(patch).$(Rev:r)
+
+name: '$(major).$(minor).$(patch).$(Rev:r)'
 
 steps:
 - task: NuGetToolInstaller@1
-- script: echo '$(buildNo)'
+- script: echo '$(name)'
 
 - task: NuGetCommand@2
   inputs:
@@ -29,7 +30,7 @@ steps:
 - task: VersionDotNetCoreAssemblies@2
   inputs:
     Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(buildNo)'
+    VersionNumber: '$(Build.BuildNumber)'
     Injectversion: true
     VersionRegex: '\d+\.\d+\.\d+\.\d+'
     FilenamePattern: '*.csproj'
