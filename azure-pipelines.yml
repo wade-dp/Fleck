@@ -30,11 +30,10 @@ steps:
   inputs:
     Path: '$(Build.SourcesDirectory)'
     VersionNumber: '$(Build.BuildNumber)'
-    Injectversion: true
+    Injectversion: false
     VersionRegex: '\d+\.\d+\.\d+\.\d+'
-    FilenamePattern: '**/*.csproj'
-    AddDefault: false
-
+    FilenamePattern: .csproj
+    OutputVersion: OutputedVersion
 
 - task: VSBuild@1
   inputs:
