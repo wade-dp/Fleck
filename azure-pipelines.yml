@@ -35,8 +35,8 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: pack
-    packagesToPack: 'Fleck\*.csproj'
-    packDestination: '$(System.DefaultWorkingDirectory)\Fleck'
+    packagesToPack: 'Fleck/*.csproj'
+    packDestination: '$(System.DefaultWorkingDirectory)/Fleck'
 
 - task: NuGetAuthenticate@0
   displayName: 'NuGet Authenticate'
@@ -45,7 +45,7 @@ steps:
   inputs:
     command: push
     feedsToUse: select
-    packagesToPush: '$(System.DefaultWorkingDirectory)\Fleck\*.nupkg'
+    packagesToPush: '$(System.DefaultWorkingDirectory)/Fleck/**/*.nupkg'
     nuGetFeedType: internal
     versioningScheme: byBuildNumber
     allowPackageConflicts: true
@@ -53,6 +53,6 @@ steps:
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Build Artifacts: RedBox'
   inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)\Fleck'
+    targetPath: '$(System.DefaultWorkingDirectory)/Fleck'
     artifact: 'FleckRelease'
     publishLocation: 'pipeline'
