@@ -16,7 +16,7 @@ variables:
   major: '1'
   minor: '0'
   patch: '0'
-  buildNo: $(major).$(minor).$(patch).$(Rev:.r)
+  buildNo: $(major).$(minor).$(patch).$(Rev:r)
 
 steps:
 - task: NuGetToolInstaller@1
