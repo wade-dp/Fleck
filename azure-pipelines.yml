@@ -27,32 +27,18 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- task: CopyFiles@2  
+  inputs:    
+    targetFolder: $(Build.ArtifactStagingDirectory)
+
+- task: PublishBuildArtifacts@1  
+  inputs:    
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'                  
+    ArtifactName: 'Fleck'    
+    publishLocation: 'Container'
+
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: NuGetCommand@2
-  inputs:
-    command: pack
-    packagesToPack: 'Fleck/*.csproj'
-    packDestination: '$(System.DefaultWorkingDirectory)/Fleck'
-
-- task: NuGetAuthenticate@0
-  displayName: 'NuGet Authenticate'
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
-  inputs:
-    command: push
-    feedsToUse: select
-    packagesToPush: '$(System.DefaultWorkingDirectory)/Fleck/**/*.nupkg'
-    nuGetFeedType: internal
-    versioningScheme: byBuildNumber
-    allowPackageConflicts: true
-
-- task: PublishPipelineArtifact@1
-  displayName: 'Publish Build Artifacts: RedBox'
-  inputs:
-    targetPath: '$(System.DefaultWorkingDirectory)/Fleck'
-    artifact: 'FleckRelease'
-    publishLocation: 'pipeline'
