@@ -30,6 +30,7 @@ steps:
 - task: CopyFiles@2  
   inputs:
     Contents: '**/*.nupkg'
+    flattenFolders: true
     targetFolder: $(Build.ArtifactStagingDirectory)
 
 - task: PublishBuildArtifacts@1  
