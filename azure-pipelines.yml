@@ -35,7 +35,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     command: pack
-    packagesToPack: 'Fleck/*.csproj'
+    packagesToPack: 'Fleck\*.csproj'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: NuGetAuthenticate@0
@@ -45,7 +45,7 @@ steps:
   inputs:
     command: push
     feedsToUse: select
-    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)\*.nupkg'
     nuGetFeedType: internal
     versioningScheme: byBuildNumber
     allowPackageConflicts: true
