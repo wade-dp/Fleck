@@ -21,6 +21,14 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: GitVersion@5
+  displayName: Apply Versioning
+  inputs:
+    runtime: 'full'
+    configFilePath: 'GitVersion.yml'
+    updateAssemblyInfo: true
+    updateAssemblyInfoFilename: 'src\Fleck\Fleck.csproj'
+
 - task: VersionDotNetCoreAssemblies@2
   inputs:
     Path: '$(Build.SourcesDirectory)'
