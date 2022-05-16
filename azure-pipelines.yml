@@ -16,7 +16,7 @@ variables:
   major: '1'
   minor: '0'
   patch: '0'
-  name: $(major).$(minor).$(patch).$(Rev:.r)
+  buildNo: $(major).$(minor).$(patch).$(Rev:.r)
 
 steps:
 - task: NuGetToolInstaller@1
@@ -29,7 +29,7 @@ steps:
 - task: VersionDotNetCoreAssemblies@2
   inputs:
     Path: '$(Build.SourcesDirectory)'
-    VersionNumber: '$(Build.BuildNumber)'
+    VersionNumber: '$(buildNo)'
     Injectversion: true
     VersionRegex: '\d+\.\d+\.\d+\.\d+'
     FilenamePattern: '*.csproj'
